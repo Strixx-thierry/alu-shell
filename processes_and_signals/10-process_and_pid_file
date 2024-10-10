@@ -1,12 +1,11 @@
 #!/usr/bin/env bash
-# This script creates a PID file, displays messages indefinitely, and handles various signals.
-
 # Create the PID file containing the script's PID
 echo $$ > /var/run/myscript.pid
 
 # Function to handle SIGTERM signal
 sigterm_handler() {
     echo "I hate the kill command"
+    cleanup_and_exit
 }
 
 # Function to handle SIGINT signal (Ctrl+C)
@@ -23,7 +22,7 @@ cleanup_and_exit() {
 # Trap signals
 trap sigterm_handler SIGTERM
 trap sigint_handler SIGINT
-trap cleanup_and_exit SIGQUIT SIGTERM
+trap cleanup_and_exit SIGQUIT
 
 # Infinite loop displaying the message
 while true; do
